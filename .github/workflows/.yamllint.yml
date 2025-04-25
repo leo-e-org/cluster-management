@@ -1,0 +1,23 @@
+extends: default
+
+exclude:
+  - .github/**
+
+rules:
+  document-start:
+    level: warning
+  truthy:
+    level: error
+  brackets:
+    level: error
+    description: "Too many spaces inside brackets"
+    max-spaces: 1
+  line-length:
+    level: error
+    max: 80
+  braces:
+    level: error
+    max-spaces: 1
+  comments:
+    level: warning
+    min-spaces: 2
