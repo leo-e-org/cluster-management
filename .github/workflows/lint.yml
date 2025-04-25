@@ -10,7 +10,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Run yamllint
-        run: yamllint . --config-file .github/workflows/.yamllint.yml
+        run: yamllint . --config-file .github/lint/.yamllint.yml
       - name: Run kubeval
         uses: instrumenta/kubeval-action@master
 
