@@ -4,20 +4,22 @@ exclude:
   - .github/**
 
 rules:
-  document-start:
-    level: warning
-  truthy:
+  braces:
     level: error
+    min-spaces-inside: 1
+    max-spaces-inside: 1
   brackets:
     level: error
     description: "Too many spaces inside brackets"
-    max-spaces: 1
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+  comments:
+    level: warning
+    min-spaces-from-content: 2
+  document-start:
+    level: warning
   line-length:
     level: error
     max: 80
-  braces:
+  truthy:
     level: error
-    max-spaces: 1
-  comments:
-    level: warning
-    min-spaces: 2
