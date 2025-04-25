@@ -10,7 +10,6 @@ rules:
     max-spaces-inside: 1
   brackets:
     level: error
-    description: "Too many spaces inside brackets"
     min-spaces-inside: 1
     max-spaces-inside: 1
   comments:
