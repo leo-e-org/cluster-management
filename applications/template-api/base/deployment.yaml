@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: template-api-java
+  name: template-api-java
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: template-api-java
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: template-api-java
+    spec:
+      containers:
+        - image: ${docker_registry}/it/template-api-java
+          name: template-api-java
+          imagePullPolicy: Always
+          resources: { }
+          env:
+            - name: LOG_LEVEL
+              value: INFO
+            - name: SPRING_CONFIG_LOCATION
+              value: "file:/config/application.yml"
+          envFrom:
+            - secretRef:
+                name: template-api-java
+          readinessProbe:
+            httpGet:
+              path: /template-api-java/actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /template-api-java/actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+              readOnly: true
+            - mountPath: /log
+              name: log-volume
+      volumes:
+        - name: config-volume
+          configMap:
+            name: template-api-java-config
+        - name: log-volume
+          hostPath:
+            path: /var/log/deployments/template-api-java
+      tolerations:
+        - key: "node.kubernetes.io/memory-pressure"
+          operator: "Exists"
+          effect: "NoSchedule"
+        - key: "node.kubernetes.io/not-ready"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0
+        - key: "node.kubernetes.io/unreachable"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0

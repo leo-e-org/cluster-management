@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/path: /template-api-java/actuator/prometheus
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+  labels:
+    app: template-api-java
+  name: template-api-java
+spec:
+  ports:
+    - name: TCP
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: template-api-java
+  type: ClusterIP

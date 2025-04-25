@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: template-api-go
+  name: template-api-go
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: template-api-go
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: template-api-go
+    spec:
+      containers:
+        - image: ${docker_registry}/it/template-api-go
+          name: template-api-go
+          imagePullPolicy: Always
+          resources: { }
+          env:
+            - name: CONFIG_PATH
+              value: "/app/config.yaml"
+          envFrom:
+            - secretRef:
+                name: template-api-go
+          readinessProbe:
+            httpGet:
+              path: /template-api-go/healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 5
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /template-api-go/healthz
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          volumeMounts:
+            - mountPath: /app/config.yaml
+              name: config-volume
+              readOnly: true
+              subPath: config.yaml
+            - mountPath: /app/log
+              name: log-volume
+      volumes:
+        - name: config-volume
+          configMap:
+            name: template-api-go-config
+        - name: log-volume
+          hostPath:
+            path: /var/log/deployments/template-api-go
+      tolerations:
+        - key: "node.kubernetes.io/memory-pressure"
+          operator: "Exists"
+          effect: "NoSchedule"
+        - key: "node.kubernetes.io/not-ready"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0
+        - key: "node.kubernetes.io/unreachable"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 0

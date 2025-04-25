@@ -1,0 +1,10 @@
+---
+resources:
+  - ../base
+  - external-secret.yaml
+configMapGenerator:
+  - name: template-api-kotlin-config
+    files:
+      - application.yml
+    options:
+      disableNameSuffixHash: true

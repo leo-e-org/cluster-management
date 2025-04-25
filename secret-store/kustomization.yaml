@@ -1,0 +1,4 @@
+---
+resources:
+  - secret-store-development.yaml
+  # - secret-store-uat.yaml
