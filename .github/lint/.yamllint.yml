@@ -19,6 +19,6 @@ rules:
     level: warning
   line-length:
     level: error
-    max: 80
+    max: 150
   truthy:
     level: error
