@@ -16,7 +16,7 @@ jobs:
         run: |
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install kubeconform
-          export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+          brew link kubeconform
       - name: kubeconform manifests validation
         run: |
           echo "Checking Kubernetes manifests..."
