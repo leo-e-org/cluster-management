@@ -1,0 +1,25 @@
+---
+extends: default
+
+ignore:
+  - .github/**
+
+rules:
+  braces:
+    level: error
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+  brackets:
+    level: error
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+  comments:
+    level: warning
+    min-spaces-from-content: 2
+  document-start:
+    level: warning
+  line-length:
+    level: error
+    max: 150
+  truthy:
+    level: error

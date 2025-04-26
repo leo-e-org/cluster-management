@@ -1,0 +1,4 @@
+---
+resources:
+  - applications-development.yaml
+  # - applications-uat.yaml

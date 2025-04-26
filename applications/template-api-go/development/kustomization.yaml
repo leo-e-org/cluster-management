@@ -1,0 +1,10 @@
+---
+resources:
+  - ../base
+  - external-secret.yaml
+configMapGenerator:
+  - name: template-api-go-config
+    files:
+      - config.yml
+    options:
+      disableNameSuffixHash: true

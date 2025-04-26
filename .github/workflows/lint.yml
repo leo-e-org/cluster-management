@@ -1,0 +1,34 @@
+name: Lint and Validate Kubernetes manifests
+
+on: [ push, pull_request ]
+
+jobs:
+  lint:
+    name: Lint + Validate
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: yamllint setup
+        run: brew install yamllint
+      - name: yamllint validation
+        run: yamllint . --config-file .github/lint/.yamllint.yml
+
+      - name: kubeconform setup
+        run: brew install kubeconform
+      - name: kubeconform manifests validation
+        run: |
+          echo "Checking Kubernetes manifests..."
+          find . -type f -path "*/base/*.yaml" ! -name "kustomization.yaml" -exec kubeconform -summary {} \;
+          find . -type f -path "/ingress/*.yaml" ! -name "kustomization.yaml" -exec kubeconform -summary {} \;
+
+      - name: Kustomize setup
+        run: brew install kustomize
+      - name: Kustomization manifests validation
+        run: |
+          echo -e "Checking Kustomization manifests...\n"
+          find . -name kustomization.yaml -exec dirname {} \; | while read dir; do
+            echo "Validating $dir"
+            kustomize build "$dir" >/dev/null
+          done
