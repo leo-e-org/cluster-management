@@ -13,7 +13,10 @@ jobs:
         run: yamllint . --config-file .github/lint/.yamllint.yml
 
       - name: kubeconform setup
-        run: go install github.com/yannh/kubeconform/cmd/kubeconform@latest
+        run: |
+          go install github.com/yannh/kubeconform/cmd/kubeconform@latest
+          ls -l $HOME/go/bin
+          kubeconform --version
       - name: kubeconform manifests validation
         run: |
           echo "Checking Kubernetes manifests..."
