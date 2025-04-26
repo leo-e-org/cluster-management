@@ -9,7 +9,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Run yamllint
+
+      - name: yamllint setup
+        run: brew install yamllint
+      - name: yamllint validation
         run: yamllint . --config-file .github/lint/.yamllint.yml
 
       - name: kubeconform setup
