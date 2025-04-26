@@ -13,10 +13,7 @@ jobs:
         run: yamllint . --config-file .github/lint/.yamllint.yml
 
       - name: kubeconform setup
-        run: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          brew install kubeconform
-          brew link kubeconform
+        run: go install github.com/yannh/kubeconform/cmd/kubeconform@latest
       - name: kubeconform manifests validation
         run: |
           echo "Checking Kubernetes manifests..."
