@@ -5,7 +5,7 @@ on: [ push, pull_request ]
 jobs:
   lint:
     name: Lint + Validate
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -13,10 +13,7 @@ jobs:
         run: yamllint . --config-file .github/lint/.yamllint.yml
 
       - name: kubeconform setup
-        run: |
-          go install github.com/yannh/kubeconform/cmd/kubeconform@latest
-          ls -l $HOME/go/bin
-          kubeconform --version
+        run: brew install kubeconform
       - name: kubeconform manifests validation
         run: |
           echo "Checking Kubernetes manifests..."
@@ -24,9 +21,7 @@ jobs:
           find . -type f -path "/ingress/*.yaml" ! -name "kustomization.yaml" -exec kubeconform -summary {} \;
 
       - name: Kustomize setup
-        run: |
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-          sudo mv kustomize /usr/local/bin/kustomize
+        run: brew install kustomize
       - name: Kustomization manifests validation
         run: |
           echo -e "Checking Kustomization manifests...\n"
