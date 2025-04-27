@@ -15,7 +15,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: ingress-resource
+  name: ingress-resource-default
   namespace: flux-system
 spec:
   interval: 5m
@@ -32,7 +32,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./applications/template-api/development
+  path: ./applications/template-api-java/development
   prune: true
   sourceRef:
     kind: GitRepository
