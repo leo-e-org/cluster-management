@@ -38,9 +38,9 @@ helm install external-secrets external-secrets/external-secrets -n default
 
 **Flux** will now reconcile:
 
-- All applications in `/applications`
+- All applications and External Secrets in `/applications`
 - The Ingress Resource definition in `/ingress`
-- External Secrets in `/secrets`
+- External Secret Store in `/secrets`
 
 ---
 
@@ -71,5 +71,7 @@ cluster-management/
 │   ├── applications-<environment>.yaml    # Flux Kustomization to apply all applications
 │   └── kustomization.yaml                 # Root kustomization for cluster
 │
-├── ingress/    # Centralized Ingress definition
+├── ingress/         # Ingress definitions
+│
+├── secret-store/    # External Secret Store definition (ESO)
 ```
