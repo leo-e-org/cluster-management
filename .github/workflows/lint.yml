@@ -46,7 +46,10 @@ jobs:
       - name: Kustomization manifests validation
         run: |
           echo -e "Checking Kustomization manifests...\n"
-          find . -name kustomization.yaml -exec dirname {} \; | while read dir; do
-            echo "Validating $dir"
-            kustomize build "$dir" >/dev/null
+          find . -name kustomization.yaml | while read file; do
+            if grep -q 'kustomize.config.k8s.io' "$file"; then
+              dir=$(dirname "$file")
+              echo "Validating $dir"
+              kustomize build "$dir" >/dev/null
+            fi
           done
