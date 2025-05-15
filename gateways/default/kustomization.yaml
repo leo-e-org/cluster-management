@@ -1,0 +1,4 @@
+---
+resources:
+  - gateway-default.yaml
+  - http-route-default.yaml

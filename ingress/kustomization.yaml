@@ -1,4 +1,0 @@
----
-resources:
-  - ingress-resource-default.yaml
-  - ingress-resource-monitoring.yaml

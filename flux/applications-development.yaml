@@ -2,32 +2,6 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: infisical
-  namespace: flux-system
-spec:
-  interval: 5m
-  path: ./secret-store
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: ingress-resource-default
-  namespace: flux-system
-spec:
-  interval: 5m
-  path: ./ingress
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: template-api-java
   namespace: flux-system
 spec:

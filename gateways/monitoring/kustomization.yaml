@@ -1,0 +1,4 @@
+---
+resources:
+  - gateway-monitoring.yaml
+  - http-route-monitoring.yaml
