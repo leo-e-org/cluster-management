@@ -1,0 +1,36 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    gateway.networking.k8s.io/generator: ingress2gateway-0.4.0
+  name: nginx-k8s-example-com
+spec:
+  hostnames:
+    - k8s.example.com
+  parentRefs:
+    - name: nginx
+  rules:
+    - backendRefs:
+        - name: template-api-java
+          port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /template-api-java
+    - backendRefs:
+        - name: template-api-kotlin
+          port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /template-api-kotlin
+    - backendRefs:
+        - name: template-api-go
+          port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /template-api-go
+status:
+  parents: [ ]

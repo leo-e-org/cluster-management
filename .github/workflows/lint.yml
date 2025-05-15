@@ -20,8 +20,18 @@ jobs:
       - name: kubeconform manifests validation
         run: |
           echo "Checking Kubernetes manifests..."
-          find . -type f -path "*/base/*.yaml" ! -name "kustomization.yaml" -exec kubeconform -summary {} \;
-          find . -type f -path "/ingress/*.yaml" ! -name "kustomization.yaml" -exec kubeconform -summary {} \;
+          find ./applications -type f \
+            -name "*.yaml" -path "*/base/*" ! \
+            -name "kustomization.yaml" \
+            -exec kubeconform -summary {} \;
+          find ./gateways -type f \
+            -name "gateway-*.yaml" ! \
+            -name "kustomization.yaml" \
+            -exec kubeconform -schema-location .github/schemas/gateway.schema.json -summary {} \;
+          find ./gateways -type f \
+            -name "http-route-*.yaml" ! \
+            -name "kustomization.yaml" \
+            -exec kubeconform -schema-location .github/schemas/httproute.schema.json -summary {} \;
 
       - name: Kustomize setup
         run: brew install kustomize
