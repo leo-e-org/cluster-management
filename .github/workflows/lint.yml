@@ -24,6 +24,10 @@ jobs:
             -name "*.yaml" -path "*/base/*" ! \
             -name "kustomization.yaml" \
             -exec kubeconform -summary {} \;
+          find ./flux -type f \
+            -name "*.yaml" ! \
+            -name "kustomization.yaml" \
+            -exec kubeconform -schema-location .github/schemas/kustomization.fluxcd.schema.json -summary {} \;
           find ./gateways -type f \
             -name "gateway-*.yaml" ! \
             -name "kustomization.yaml" \
@@ -32,6 +36,10 @@ jobs:
             -name "http-route-*.yaml" ! \
             -name "kustomization.yaml" \
             -exec kubeconform -schema-location .github/schemas/httproute.schema.json -summary {} \;
+          find ./secret-store -type f \
+            -name "*.yaml" ! \
+            -name "kustomization.yaml" \
+            -exec kubeconform -schema-location .github/schemas/secretstore.schema.json -summary {} \;
 
       - name: Kustomize setup
         run: brew install kustomize

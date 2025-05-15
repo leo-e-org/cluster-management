@@ -1,10 +1,12 @@
 ---
-resources:
-  - ../base
-  - external-secret.yaml
+apiVersion: kustomize.config.k8s.io/v1
+kind: Kustomization
 configMapGenerator:
   - name: template-api-go-config
     files:
       - config.yml
     options:
       disableNameSuffixHash: true
+resources:
+  - ../base
+  - external-secret.yaml

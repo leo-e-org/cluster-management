@@ -2,5 +2,4 @@
 apiVersion: kustomize.config.k8s.io/v1
 kind: Kustomization
 resources:
-  - gateway-default.yaml
-  - http-route-default.yaml
+  - secret-store.yaml
