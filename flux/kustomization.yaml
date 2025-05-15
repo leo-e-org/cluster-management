@@ -1,6 +1,0 @@
----
-resources:
-  - secret-store-development.yaml
-  - gateways-development.yaml
-  - applications-development.yaml
-  # UAT manifests

@@ -5,6 +5,13 @@ metadata:
   name: template-api-java
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infisical-secret-store
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: template-api-java
+      namespace: default
   interval: 5m
   path: ./applications/template-api-java/development
   prune: true
@@ -18,6 +25,13 @@ metadata:
   name: template-api-kotlin
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infisical-secret-store
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: template-api-kotlin
+      namespace: default
   interval: 5m
   path: ./applications/template-api-kotlin/development
   prune: true
@@ -31,6 +45,13 @@ metadata:
   name: template-api-go
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infisical-secret-store
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: template-api-go
+      namespace: default
   interval: 5m
   path: ./applications/template-api-go/development
   prune: true

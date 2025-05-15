@@ -24,7 +24,7 @@ kubectl create ns flux-system
 Assuming the repository is hosted in GitHub and _kube_ context is set:
 
 ```shell
-flux bootstrap github --owner=<owner> --repository=cluster-management --path=cluster/flux-system --personal
+flux bootstrap github --owner=<owner> --repository=cluster-management --path=flux/<environment> --personal
 ```
 
 ### 4. Install External Secrets Operator (ESO)
@@ -39,8 +39,8 @@ helm install external-secrets external-secrets/external-secrets -n default
 **Flux** will now reconcile:
 
 - All applications and External Secrets in `/applications`
-- The Ingress Resource definition in `/ingress`
-- External Secret Store in `/secrets`
+- The Gateway API definitions in `/gateways`
+- External Secret Store in `/secret-store`
 
 ---
 
@@ -67,11 +67,11 @@ cluster-management/
 │       ├── base/             # Base deployment + service
 │       └── <environment>/    # ConfigMap, SealedSecret, env-specific values
 │
-├── flux/                                  # Flux source reference
-│   ├── applications-<environment>.yaml    # Flux Kustomization to apply all applications
-│   └── kustomization.yaml                 # Root kustomization for cluster
+├── flux/                     # Flux source reference
+│   ├── <environment>/        # Flux Kustomizations per environment
 │
-├── ingress/         # Ingress definitions
+├── gateways/                 # Gateway API definitions
 │
-├── secret-store/    # External Secret Store definition (ESO)
+├── secret-store/             # External Secret Store (ESO) source reference
+│   └── <environment>/        # SecretStore definition per environment
 ```
